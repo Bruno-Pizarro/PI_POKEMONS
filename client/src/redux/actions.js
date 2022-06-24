@@ -3,6 +3,8 @@ export const GET_API_POKEMONS = "GET_API_POKEMONS";
 export const GET_DB_POKEMONS = "GET_DB_POKEMONS";
 export const GET_ALL_POKEMONS = "GET_ALL_POKEMONS";
 
+export const GET_PAGINATED = "GET_PAGEINATED";
+
 export const GET_ALL_TYPES = "GET_ALL_TYPES";
 export const FILTER_BY_TYPE = "FILTER_BY_TYPE";
 
@@ -10,6 +12,7 @@ export const CLEAR_POKEMONS = "CLEAR_POKEMONS";
 export const FILTER_BY_NAME = "FILTER_BY_NAME";
 
 export const CLEAR_FILTER = "CLEAR_FILTER";
+export const CLEAR_FILTER_TYPE = "CLEAR_FILTER_TYPE";
 export const SORT_BY = "SORT_BY";
 
 export function getAllPokemons() {
@@ -78,5 +81,25 @@ export function getAllTypes() {
 export function filterByType(type) {
   return function (dispatch) {
     dispatch({ type: FILTER_BY_TYPE, payload: type });
+  };
+}
+
+export function clearFilterType() {
+  return function (dispatch) {
+    dispatch({ type: CLEAR_FILTER_TYPE });
+  };
+}
+
+export function getPage(n) {
+  return function (dispatch) {
+    dispatch({ type: GET_PAGINATED, payload: n });
+  };
+}
+
+export function createPokemon(pokemonBody) {
+  return async function (dispatch) {
+    axios.post("http://localhost:3001/pokemon", pokemonBody).then((r) => {
+      console.log(r.data);
+    });
   };
 }

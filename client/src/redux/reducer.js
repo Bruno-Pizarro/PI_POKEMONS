@@ -8,11 +8,16 @@ import {
   CLEAR_FILTER,
   FILTER_BY_TYPE,
   SORT_BY,
+  GET_PAGINATED,
+  CLEAR_FILTER_TYPE,
 } from "./actions";
 
 const initialState = {
+  allPokemons: [],
   pokemons: [],
+  paginated: [],
   filtered: [],
+  filterType: [],
   types: [],
 };
 
@@ -21,6 +26,7 @@ export default function reducer(state = initialState, action) {
     case GET_ALL_POKEMONS:
       return {
         ...state,
+        allPokemons: action.payload,
         pokemons: action.payload,
       };
     case FILTER_BY_NAME:
@@ -34,10 +40,9 @@ export default function reducer(state = initialState, action) {
         filtered: [],
       };
     case SORT_BY:
-      const allPokemons = state.pokemons;
       const sorted =
         action.payload === "a-z"
-          ? allPokemons.sort(function (a, b) {
+          ? state.pokemons.sort(function (a, b) {
               if (a.name < b.name) {
                 return -1;
               }
@@ -47,7 +52,7 @@ export default function reducer(state = initialState, action) {
               return 0;
             })
           : action.payload === "z-a"
-          ? allPokemons.sort(function (a, b) {
+          ? state.pokemons.sort(function (a, b) {
               if (a.name > b.name) {
                 return -1;
               }
@@ -57,10 +62,11 @@ export default function reducer(state = initialState, action) {
               return 0;
             })
           : action.payload === "a-h-t-l"
-          ? allPokemons.sort((a, b) => b.attack - a.attack)
+          ? state.pokemons.sort((a, b) => b.attack - a.attack)
           : action.payload === "a-l-t-h"
-          ? allPokemons.sort((a, b) => a.attack - b.attack)
-          : allPokemons;
+          ? state.pokemons.sort((a, b) => a.attack - b.attack)
+          : state.pokemons;
+
       return {
         ...state,
         pokemons: sorted,
@@ -68,17 +74,17 @@ export default function reducer(state = initialState, action) {
     case CLEAR_POKEMONS:
       return {
         ...state,
-        pokemons: [],
+        pokemons: state.allPokemons,
       };
     case GET_API_POKEMONS:
       return {
         ...state,
-        pokemons: action.payload,
+        pokemons: state.allPokemons.filter((p) => p.id.substring(0, 1) === "a"),
       };
     case GET_DB_POKEMONS:
       return {
         ...state,
-        pokemons: action.payload,
+        pokemons: state.allPokemons.filter((p) => p.id.substring(0, 1) === "d"),
       };
     case GET_ALL_TYPES:
       return {
@@ -88,7 +94,19 @@ export default function reducer(state = initialState, action) {
     case FILTER_BY_TYPE:
       return {
         ...state,
-        pokemons: state.pokemons.filter((p) => p.type.includes(action.payload)),
+        pokemons: state.allPokemons.filter((p) =>
+          p.types.includes(action.payload)
+        ),
+      };
+    case CLEAR_FILTER_TYPE:
+      return {
+        ...state,
+        pokemons: state.allPokemons,
+      };
+    case GET_PAGINATED:
+      return {
+        ...state,
+        paginated: state.pokemons.slice(action.payload, action.payload + 10),
       };
     default:
       return state;

@@ -4,6 +4,7 @@ import SearchBar from "./SearchBar";
 import FilterBy from "./FilterBy";
 import FilterByType from "./FilterByType";
 import OrderBy from "./OrderBy";
+import Paginated from "./Paginated";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       <FilterByType />
       <OrderBy />
       <SearchBar />
+      <Paginated />
       <Cards />
     </div>
   );

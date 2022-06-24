@@ -2,6 +2,8 @@ const axios = require("axios");
 const { Pokemon, Type } = require("../db.js");
 
 module.exports = {
+  pokemons: [],
+  types: [],
   getApiPokemons: async function () {
     var obj = {};
     const response = await axios.get(
@@ -15,6 +17,7 @@ module.exports = {
         name: p.name,
         image: pokemon.sprites.other.dream_world.front_default,
         attack: pokemon.stats[1].base_stat,
+        types: pokemon.types.map((t) => t.type.name),
       };
       return obj;
     });
@@ -64,10 +67,19 @@ module.exports = {
       };
     });
   },
-  getAllTypes: async function () {
+  loadApiTypes: async function () {
     const api = await this.getApiTypes();
-    const db = await this.getDBTypes();
-    return [...api, ...db];
+    const promises = api.map((t) => {
+      Type.create({
+        name: t.name,
+      });
+    });
+    await Promise.all(promises);
+    this.types = [...api];
+  },
+  returnTypes: async function () {
+    this.types = await this.getDBTypes();
+    return this.types;
   },
   getApiTypeName: async function (name) {
     const response = await axios.get(`https://pokeapi.co/api/v2/type/${name}`);
@@ -84,6 +96,7 @@ module.exports = {
         name: p.name,
         image: p.image,
         attack: p.attack,
+        types: p.types.map((t) => t.name),
       };
     });
   },

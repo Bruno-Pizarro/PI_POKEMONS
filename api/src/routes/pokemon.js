@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const controller = require("../controllers/controllers.js");
 const pokemon = Router();
-const { Pokemon } = require("../db.js");
+const { Pokemon, Type } = require("../db.js");
 
 pokemon.get("/", async (req, res) => {
   const { name } = req.query;
@@ -44,6 +44,59 @@ pokemon.get("/db", async (req, res) => {
       return res.send(filtered.map((p) => p.toJSON()));
     }
     res.send(await controller.getDBPokemons());
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
+});
+
+pokemon.post("/", async (req, res) => {
+  const {
+    name,
+    image,
+    hp,
+    attack,
+    defense,
+    speed,
+    height,
+    weight,
+    type1,
+    type2,
+  } = req.body;
+  const response = await Pokemon.findOne({
+    where: {
+      name: req.body.name,
+    },
+  });
+  if (response)
+    return res.status(409).json({ error: "The Pokemon Already exist" });
+  if (
+    !name ||
+    !hp ||
+    !speed ||
+    !attack ||
+    !defense ||
+    !height ||
+    !weight ||
+    !type1
+  )
+    res.status(400).json({ error: "All properties must be filled" });
+  try {
+    const newPokemon = await Pokemon.create(req.body);
+    const t1 = await Type.findOne({
+      where: {
+        name: type1,
+      },
+    });
+    newPokemon.addType(t1);
+    if (type2) {
+      const t2 = await Type.findOne({
+        where: {
+          name: type2,
+        },
+      });
+      newPokemon.addType(t2);
+    }
+    res.json({ success: "Pokemon Created!" });
   } catch (error) {
     res.status(404).json({ error: error.message });
   }
