@@ -10,25 +10,23 @@ pokemon.get("/", async (req, res) => {
     if (name) {
       var find = all.find((p) => p.name === name);
       if (find) {
-        return res.send(find);
+        return res.json(find);
       } else {
-        return res.send(await controller.getApiPokemonDetail(name));
+        return res.json(await controller.getApiPokemonDetail(name));
       }
     }
-
-    res.send(all);
+    res.json(all);
   } catch (error) {
-    console.log(error);
-    res.json({ error: error.message });
+    res.status(404).json({ error: error.message });
   }
 });
 
 pokemon.get("/api", async (req, res) => {
   const { id, name } = req.query;
   try {
-    if (id) return res.send(await controller.getApiPokemonDetail(id));
-    if (name) return res.send(await controller.getApiPokemonDetail(name));
-    res.send(await controller.getApiPokemons());
+    if (id) return res.json(await controller.getApiPokemonDetail(id));
+    if (name) return res.json(await controller.getApiPokemonDetail(name));
+    res.json(await controller.getApiPokemons());
   } catch (error) {
     res.status(404).json({ error: error.message });
   }

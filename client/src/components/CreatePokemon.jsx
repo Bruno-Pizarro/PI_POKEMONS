@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllTypes } from "../redux/actions";
+import { getAllTypes, createPokemon } from "../redux/actions";
 
 export default function CreatePokemon() {
   const [input, setInput] = useState({
@@ -29,6 +29,11 @@ export default function CreatePokemon() {
 
   function handleOnSubmit(e) {
     e.preventDefault();
+    if (input.name) {
+      dispatch(createPokemon(input));
+    } else {
+      setErrors({ ...errors, name: true });
+    }
   }
 
   function handleOnChange(e) {
@@ -66,7 +71,7 @@ export default function CreatePokemon() {
         />
         <p>
           {errors.image
-            ? "Image is required"
+            ? null
             : /(https?:\/\/.*\.(?:png|jpg|svg))/.test(errors.imgValid)
             ? null
             : "Image must be an image url"}

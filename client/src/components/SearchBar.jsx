@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { filterName, clearFilter } from "../redux/actions";
+import { useDispatch } from "react-redux";
+import { clearError, filterName, noFilter } from "../redux/actions";
 
 export default function SearchBar() {
   const dispatch = useDispatch();
   const [filter, setFilter] = useState("");
-  const filtered = useSelector((state) => state.filtered);
   function filterByName(e) {
     e.preventDefault();
     if (filter === "") {
-      return dispatch(clearFilter());
+      dispatch(clearError());
+      return dispatch(noFilter("search"));
     }
-    dispatch(filterName(filter));
+    dispatch(filterName(filter.toLowerCase()));
     setFilter("");
   }
   function handleChange(e) {
@@ -28,11 +28,7 @@ export default function SearchBar() {
           onChange={(e) => handleChange(e)}
         />
         <button type="submit">
-          {filtered.length > 0 || filter === "" ? (
-            <span>REFRESH</span>
-          ) : (
-            <span>SEARCH</span>
-          )}
+          {filter === "" ? <span>REFRESH</span> : <span>SEARCH</span>}
         </button>
       </form>
     </div>

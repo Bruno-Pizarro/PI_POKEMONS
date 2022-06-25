@@ -1,24 +1,24 @@
 import {
   GET_ALL_POKEMONS,
-  CLEAR_POKEMONS,
   GET_API_POKEMONS,
-  GET_ALL_TYPES,
   GET_DB_POKEMONS,
+  CLEAR_POKEMONS,
   FILTER_BY_NAME,
-  CLEAR_FILTER,
+  NOT_FOUND,
+  GET_PAGINATED,
+  GET_ALL,
   FILTER_BY_TYPE,
   SORT_BY,
-  GET_PAGINATED,
-  CLEAR_FILTER_TYPE,
+  GET_ALL_TYPES,
+  CLEAR_ERROR,
 } from "./actions";
 
 const initialState = {
   allPokemons: [],
   pokemons: [],
   paginated: [],
-  filtered: [],
-  filterType: [],
   types: [],
+  errorNotFound: [],
 };
 
 export default function reducer(state = initialState, action) {
@@ -26,18 +26,13 @@ export default function reducer(state = initialState, action) {
     case GET_ALL_POKEMONS:
       return {
         ...state,
-        allPokemons: action.payload,
+        allPokemons: [...action.payload],
         pokemons: action.payload,
       };
     case FILTER_BY_NAME:
       return {
         ...state,
-        filtered: [action.payload],
-      };
-    case CLEAR_FILTER:
-      return {
-        ...state,
-        filtered: [],
+        pokemons: [action.payload],
       };
     case SORT_BY:
       const sorted =
@@ -65,8 +60,7 @@ export default function reducer(state = initialState, action) {
           ? state.pokemons.sort((a, b) => b.attack - a.attack)
           : action.payload === "a-l-t-h"
           ? state.pokemons.sort((a, b) => a.attack - b.attack)
-          : state.pokemons;
-
+          : [...state.allPokemons];
       return {
         ...state,
         pokemons: sorted,
@@ -74,7 +68,7 @@ export default function reducer(state = initialState, action) {
     case CLEAR_POKEMONS:
       return {
         ...state,
-        pokemons: state.allPokemons,
+        pokemons: [],
       };
     case GET_API_POKEMONS:
       return {
@@ -94,19 +88,29 @@ export default function reducer(state = initialState, action) {
     case FILTER_BY_TYPE:
       return {
         ...state,
-        pokemons: state.allPokemons.filter((p) =>
+        pokemons: state.pokemons.filter((p) =>
           p.types.includes(action.payload)
         ),
-      };
-    case CLEAR_FILTER_TYPE:
-      return {
-        ...state,
-        pokemons: state.allPokemons,
       };
     case GET_PAGINATED:
       return {
         ...state,
         paginated: state.pokemons.slice(action.payload, action.payload + 10),
+      };
+    case GET_ALL:
+      return {
+        ...state,
+        pokemons: [...state.allPokemons],
+      };
+    case NOT_FOUND:
+      return {
+        ...state,
+        errorNotFound: [...action.payload],
+      };
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        errorNotFound: [],
       };
     default:
       return state;
