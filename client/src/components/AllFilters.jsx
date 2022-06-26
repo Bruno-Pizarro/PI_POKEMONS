@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllTypes, applyFilters } from "../redux/actions";
+import s from "../stylesheets/AllFilters.module.css";
 
 export default function AllFilters() {
   const dispatch = useDispatch();
@@ -32,9 +33,10 @@ export default function AllFilters() {
   }
 
   return (
-    <div>
-      <form onSubmit={(e) => handleSubmit(e)}>
+    <div className={s.contfilter}>
+      <form className={s.form} onSubmit={(e) => handleSubmit(e)}>
         <select
+          className={s.selects}
           id="from"
           value={filters.from}
           onChange={(e) => handleChange(e)}
@@ -45,6 +47,7 @@ export default function AllFilters() {
         </select>
 
         <select
+          className={s.selects}
           id="types"
           value={filters.types}
           onChange={(e) => handleChange(e)}
@@ -52,13 +55,14 @@ export default function AllFilters() {
           <option value="all">Select Type</option>
           {types &&
             types.map((t) => (
-              <option key={t.id} value={t.name}>
+              <option className={s.option} key={t.id} value={t.name}>
                 {t.name.charAt(0).toUpperCase() + t.name.slice(1)}
               </option>
             ))}
         </select>
 
         <select
+          className={s.selects}
           id="order"
           value={filters.order}
           onChange={(e) => handleChange(e)}
@@ -70,7 +74,7 @@ export default function AllFilters() {
           <option value="a-l-t-h">Attack(lowest to highest)</option>
         </select>
 
-        <button type="submit">
+        <button className={s.applyBtn} type="submit">
           {" "}
           {filters.order !== "all" ||
           filters.from !== "all" ||

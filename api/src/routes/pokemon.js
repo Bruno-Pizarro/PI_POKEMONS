@@ -15,6 +15,7 @@ pokemon.get("/", async (req, res) => {
         return res.json(await controller.getApiPokemonDetail(name));
       }
     }
+
     res.json(all);
   } catch (error) {
     res.status(404).json({ error: error.message });
@@ -42,6 +43,22 @@ pokemon.get("/db", async (req, res) => {
       return res.send(filtered.map((p) => p.toJSON()));
     }
     res.send(await controller.getDBPokemons());
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
+});
+
+pokemon.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    if (id[0] === "a")
+      return res.json(await controller.getApiPokemonDetail(id.substring(1)));
+    if (id[0] === "d")
+      return res.json(
+        await Pokemon.findByPk(parseInt(id.substring(1)), {
+          include: Type,
+        })
+      );
   } catch (error) {
     res.status(404).json({ error: error.message });
   }

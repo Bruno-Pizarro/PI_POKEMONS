@@ -41,7 +41,12 @@ module.exports = {
       defense: response.stats[2].base_stat,
       specialDefense: response.stats[4].base_stat,
       speed: response.stats[5].base_stat,
-      types: response.types,
+      types: response.types.map((t, i) => {
+        return {
+          id: t.slot,
+          name: t.type.name,
+        };
+      }),
     };
   },
   getApiTypes: async function () {

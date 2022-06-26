@@ -10,12 +10,15 @@ import {
   FILTER_BY_TYPE,
   SORT_BY,
   GET_ALL_TYPES,
+  GET_DETAIL,
+  CLEAR_DETAIL,
   CLEAR_ERROR,
 } from "./actions";
 
 const initialState = {
   allPokemons: [],
   pokemons: [],
+  pokemonDetail: {},
   paginated: [],
   types: [],
   errorNotFound: [],
@@ -111,6 +114,16 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         errorNotFound: [],
+      };
+    case GET_DETAIL:
+      return {
+        ...state,
+        pokemonDetail: action.payload,
+      };
+    case CLEAR_DETAIL:
+      return {
+        ...state,
+        pokemonDetail: [],
       };
     default:
       return state;

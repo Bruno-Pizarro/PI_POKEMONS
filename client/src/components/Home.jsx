@@ -1,17 +1,17 @@
 import React from "react";
 import Cards from "./Cards";
-import SearchBar from "./SearchBar";
-import Paginated from "./Paginated";
 import AllFilters from "./AllFilters";
+import s from "../stylesheets/Home.module.css";
 
 export default function Home() {
   return (
-    <div>
-      <h1>Hola!</h1>
-      <AllFilters />
-      <SearchBar />
-      <Paginated />
-      <Cards />
+    <div className={s.homeCont}>
+      <div className={s.divFilters}>
+        <AllFilters />
+      </div>
+      <div className={s.divCards}>
+        <Cards />
+      </div>
     </div>
   );
 }

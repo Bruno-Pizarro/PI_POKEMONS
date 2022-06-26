@@ -1,0 +1,55 @@
+.contfilter{
+    margin: 200px auto;
+    width: 100%;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+}
+
+.selects{
+    height: 40px;
+    margin: 10px auto;
+    width: 110px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: rgb(125, 215, 231);
+}
+
+/* .option{
+    background-color: white;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+.option::-webkit-scrollbar-thumb {
+    background-color: #3677ef;
+    border: 1px solid rgb(193, 193, 193);
+  } */
+/* .option::-webkit-scrollbar-track{
+    width: 5px;
+    background-color: red;
+} */
+
+.applyBtn{
+    height: 40px;
+    margin: 10px auto;
+    width: 110px;
+    font-weight: bold;
+    font-size: 18px;
+    color: rgb(180, 180, 180);
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(23, 99, 13);
+    transition: all ease .2s;
+    cursor: pointer;
+}
+.applyBtn:hover{
+    background-color: rgb(32, 141, 18);
+    color: rgb(255, 255, 255);
+    transform: scale(1.1);
+}

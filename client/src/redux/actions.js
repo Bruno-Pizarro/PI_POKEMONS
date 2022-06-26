@@ -12,6 +12,9 @@ export const FILTER_BY_NAME = "FILTER_BY_NAME";
 export const NOT_FOUND = "NOT_FOUND";
 export const CLEAR_ERROR = "CLEAR_ERROR";
 
+export const GET_DETAIL = "GET_DETAIL";
+export const CLEAR_DETAIL = "CLEAR_DETAIL";
+
 export const GET_PAGINATED = "GET_PAGEINATED";
 
 export const GET_ALL = "GET_ALL";
@@ -70,6 +73,20 @@ export function filterName(name) {
 export function clearError() {
   return function (dispatch) {
     dispatch({ type: CLEAR_ERROR });
+  };
+}
+
+export function pokemonDetail(id) {
+  return function (dispatch) {
+    return axios.get(`http://localhost:3001/pokemon/${id}`).then((r) => {
+      return dispatch({ type: GET_DETAIL, payload: r.data });
+    });
+  };
+}
+
+export function clearDetail() {
+  return function (dispatch) {
+    dispatch({ type: CLEAR_DETAIL });
   };
 }
 

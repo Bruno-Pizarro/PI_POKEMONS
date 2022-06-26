@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { clearError, filterName, noFilter } from "../redux/actions";
+import s from "../stylesheets/SearchBar.module.css";
 
 export default function SearchBar() {
   const dispatch = useDispatch();
@@ -19,18 +20,20 @@ export default function SearchBar() {
     setFilter(e.target.value);
   }
   return (
-    <div>
-      <form onSubmit={(e) => filterByName(e)}>
-        <input
-          type="text"
-          value={filter}
-          placeholder="Search..."
-          onChange={(e) => handleChange(e)}
-        />
-        <button type="submit">
-          {filter === "" ? <span>REFRESH</span> : <span>SEARCH</span>}
-        </button>
-      </form>
-    </div>
+    <form className={s.searchCont} onSubmit={(e) => filterByName(e)}>
+      <input
+        className={s.input}
+        type="text"
+        value={filter}
+        placeholder="Search..."
+        onChange={(e) => handleChange(e)}
+      />
+      <button
+        type="submit"
+        className={`${s.btn} ${filter !== "" ? s.btnsearch : null}`}
+      >
+        {filter === "" ? <span>REFRESH</span> : <span>SEARCH</span>}
+      </button>
+    </form>
   );
 }

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPage } from "../redux/actions";
+import s from "../stylesheets/Paginated.module.css";
 
 export default function Paginated() {
   const dispatch = useDispatch();
@@ -20,8 +21,8 @@ export default function Paginated() {
     if (count - 9 > 0) {
       dispatch(getPage(count - 10));
       setCount(count - 10);
-      if (count <= min) setMin(count);
-      if (count <= min) setMax(count + 30);
+      if (count <= max) setMin(count - 10);
+      if (count <= max && count - 10 !== 0) setMax(count + 20);
     }
   }
   function handleNext() {
@@ -43,29 +44,41 @@ export default function Paginated() {
   }
 
   return (
-    <div>
-      <button value={10} onClick={() => handlePrev()}>
+    <div className={s.pageCont}>
+      <button className={s.nextPrev} value={10} onClick={() => handlePrev()}>
         Prev
       </button>
       {pokemons &&
         pokemons.map((p, i) =>
           i === 0 ? (
             min === 0 || min - max < 40 ? (
-              <button key={i} onClick={() => page(i)}>
+              <button
+                className={`${s.pageContBtn} ${
+                  i === count ? s.currentPage : null
+                }`}
+                key={i}
+                onClick={() => page(i)}
+              >
                 {i / 10 + 1}
               </button>
             ) : null
           ) : (i + 10) % 10 === 0 ? (
             i >= min ? (
               i <= max ? (
-                <button key={i} onClick={() => page(i)}>
+                <button
+                  className={`${s.pageContBtn} ${
+                    count === i ? s.currentPage : null
+                  }`}
+                  key={i}
+                  onClick={() => page(i)}
+                >
                   {i / 10 + 1}
                 </button>
               ) : null
             ) : null
           ) : null
         )}
-      <button value={10} onClick={() => handleNext()}>
+      <button className={s.nextPrev} value={10} onClick={() => handleNext()}>
         Next
       </button>
     </div>

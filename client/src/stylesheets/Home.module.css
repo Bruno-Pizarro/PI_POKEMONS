@@ -1,0 +1,12 @@
+.homeCont{
+    display: flex;
+    flex-direction: row;
+}
+
+.divFilters{
+    width: 20%;
+}
+
+.divCards{
+    width: 80%;
+}
