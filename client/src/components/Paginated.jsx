@@ -21,7 +21,7 @@ export default function Paginated() {
     if (count - 9 > 0) {
       dispatch(getPage(count - 10));
       setCount(count - 10);
-      if (count <= max) setMin(count - 10);
+      if (count <= max && count < pokemons.length - 30) setMin(count - 10);
       if (count <= max && count - 10 !== 0) setMax(count + 20);
     }
   }
