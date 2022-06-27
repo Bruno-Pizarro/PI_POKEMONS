@@ -28,7 +28,8 @@ module.exports = {
     const response = (
       await axios.get(`https://pokeapi.co/api/v2/pokemon/${idApi}`)
     ).data;
-    if (!response) throw new Error(`Pokemon id ${idApi} doesn't exist.`);
+    if (!response)
+      throw new Error(`Pokemon id or name: ${idApi} doesn't exist.`);
     return {
       id: `a${response.id}`,
       name: response.name,
