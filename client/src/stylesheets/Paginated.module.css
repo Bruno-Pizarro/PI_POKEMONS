@@ -3,7 +3,7 @@
     margin-top: 20px;
     display: flex;
     flex-direction: row;
-    width: 40%;
+    width: 70%;
     justify-content: space-around;
 }
 .pageContBtn{
@@ -27,6 +27,7 @@
 .currentPage{
     background-color: rgb(7, 44, 77);
     color: white;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.603);
 }
 
 .currentPage:hover{

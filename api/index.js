@@ -23,9 +23,6 @@ const controllers = require("./src/controllers/controllers.js");
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(async () => {
-  server.listen(3001, () => {
-    console.log("%s listening at 3001"); // eslint-disable-line no-console
-  });
   await controllers.loadApiTypes();
   const p1 = await Pokemon.create({
     name: "pablo",
@@ -38,8 +35,8 @@ conn.sync({ force: true }).then(async () => {
     height: 1,
     weight: 1,
   });
-  const t1 = await Type.create({
-    name: "typo",
+  await p1.addTypes(["1", "10"]);
+  server.listen(3001, () => {
+    console.log("%s listening at 3001"); // eslint-disable-line no-console
   });
-  await p1.addTypes(["1", "10", "12"]);
 });

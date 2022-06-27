@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllTypes, createPokemon } from "../redux/actions";
+import { getAllTypes, createPokemon, getAllPokemons } from "../redux/actions";
 import s from "../stylesheets/CreatePokemon.module.css";
 
 export default function CreatePokemon() {
@@ -24,14 +24,32 @@ export default function CreatePokemon() {
   });
   const dispatch = useDispatch();
   const types = useSelector((state) => state.types);
+  const allPokemons = useSelector((state) => state.allPokemons);
   useEffect(() => {
+    dispatch(getAllPokemons());
     dispatch(getAllTypes());
   }, [dispatch]);
 
   function handleOnSubmit(e) {
     e.preventDefault();
-    if (input.name) {
+    var find = allPokemons.find(
+      (p) => p.name.toLowerCase() === input.name.toLowerCase()
+    );
+    if (find) return alert("The pokemon already exist.");
+    if (input.name && input.name.length <= 20) {
       dispatch(createPokemon(input));
+      setInput({
+        name: "",
+        image: "",
+        hp: 1,
+        attack: 1,
+        defense: 1,
+        speed: 1,
+        height: 0.2,
+        weight: 1,
+        type1: "normal",
+        type2: "",
+      });
     } else {
       setErrors({ ...errors, name: true });
     }
@@ -55,6 +73,7 @@ export default function CreatePokemon() {
         <div className={s.inputCont}>
           <div>
             <input
+              maxLength="20"
               type="text"
               name="name"
               value={input.name}
@@ -81,37 +100,37 @@ export default function CreatePokemon() {
                 ? null
                 : "Image must be an image url"}
             </span>
-            <select
-              id="types1"
-              name="type1"
-              value={input.type1}
-              onChange={(e) => handleOnChange(e)}
-            >
-              {types &&
-                types.map((t) => (
-                  <option key={t.id} value={t.name}>
-                    {t.name.charAt(0).toUpperCase() + t.name.slice(1)}
-                  </option>
-                ))}
-            </select>
-            <select
-              id="types2"
-              name="type2"
-              value={input.type2}
-              onChange={(e) => handleOnChange(e)}
-            >
-              <option value="">Select second type</option>
-              {types &&
-                types.map((t) => (
-                  <option key={t.id} value={t.name}>
-                    {t.name.charAt(0).toUpperCase() + t.name.slice(1)}
-                  </option>
-                ))}
-            </select>
           </div>
+          <select
+            id="types1"
+            name="type1"
+            value={input.type1}
+            onChange={(e) => handleOnChange(e)}
+          >
+            {types &&
+              types.map((t) => (
+                <option key={t.id} value={t.name}>
+                  {t.name.charAt(0).toUpperCase() + t.name.slice(1)}
+                </option>
+              ))}
+          </select>
+          <select
+            id="types2"
+            name="type2"
+            value={input.type2}
+            onChange={(e) => handleOnChange(e)}
+          >
+            <option value="">Select second type</option>
+            {types &&
+              types.map((t) => (
+                <option key={t.id} value={t.name}>
+                  {t.name.charAt(0).toUpperCase() + t.name.slice(1)}
+                </option>
+              ))}
+          </select>
         </div>
         <div className={s.features}>
-          <span>Hp:{input.hp}</span>
+          <span>Hp: {input.hp}</span>
           <input
             name="hp"
             type="range"
@@ -120,7 +139,7 @@ export default function CreatePokemon() {
             value={input.hp}
             onChange={(e) => handleOnChange(e)}
           />
-          <span>Attack:{input.attack}</span>
+          <span>Attack: {input.attack}</span>
           <input
             name="attack"
             type="range"
@@ -129,7 +148,7 @@ export default function CreatePokemon() {
             onChange={(e) => handleOnChange(e)}
             value={input.attack}
           />
-          <span>Defense:{input.defense}</span>
+          <span>Defense: {input.defense}</span>
           <input
             name="defense"
             type="range"
@@ -138,7 +157,7 @@ export default function CreatePokemon() {
             onChange={(e) => handleOnChange(e)}
             value={input.defense}
           />
-          <span>Speed:{input.speed}</span>
+          <span>Speed: {input.speed}</span>
           <input
             name="speed"
             type="range"
@@ -147,7 +166,7 @@ export default function CreatePokemon() {
             onChange={(e) => handleOnChange(e)}
             value={input.speed}
           />
-          <span>Height:{input.height}m</span>
+          <span>Height: {input.height}m</span>
           <input
             name="height"
             type="range"
@@ -157,7 +176,7 @@ export default function CreatePokemon() {
             onChange={(e) => handleOnChange(e)}
             value={input.height}
           />
-          <span>Weight:{input.weight}kg</span>
+          <span>Weight: {input.weight}kg</span>
           <input
             name="weight"
             type="range"
@@ -168,13 +187,13 @@ export default function CreatePokemon() {
           />
         </div>
 
-        <input type="submit" value="CREATE POKEMON!" />
+        <input className={s.create} type="submit" value="CREATE POKEMON!" />
       </form>
       <div className={s.imageView}>
         {/(https?:\/\/.*\.(?:png|jpg|svg))/.test(input.image) ? (
-          <img src={input.image} />
+          <img className={s.img} src={input.image} alt="Custom" />
         ) : (
-          "Here you can preview your pokemon image."
+          "Here you can preview your Pokemon image."
         )}
       </div>
     </div>

@@ -94,9 +94,14 @@ export function clearDetail() {
 
 export function createPokemon(pokemonBody) {
   return async function (dispatch) {
-    axios.post("http://localhost:3001/pokemon", pokemonBody).then((r) => {
-      console.log(r.data);
-    });
+    axios
+      .post("http://localhost:3001/pokemon", pokemonBody)
+      .then((r) => {
+        alert(r.data.success);
+      })
+      .catch((err) => {
+        alert(err.response.data.error);
+      });
   };
 }
 

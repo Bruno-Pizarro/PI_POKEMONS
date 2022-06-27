@@ -65,25 +65,16 @@ pokemon.get("/:id", async (req, res) => {
 });
 
 pokemon.post("/", async (req, res) => {
-  const {
-    name,
-    image,
-    hp,
-    attack,
-    defense,
-    speed,
-    height,
-    weight,
-    type1,
-    type2,
-  } = req.body;
-  const response = await Pokemon.findOne({
-    where: {
-      name: req.body.name,
-    },
-  });
+  const { name, hp, attack, defense, speed, height, weight, type1, type2 } =
+    req.body;
+  const pokemons = await controller.getAllPokemon();
+  const response = pokemons.find(
+    (p) => p.name.toLowerCase() === name.toLowerCase()
+  );
   if (response)
-    return res.status(409).json({ error: "The Pokemon Already exist" });
+    return res
+      .status(409)
+      .send({ error: `The pokemon named ${name} already exist.` });
   if (
     !name ||
     !hp ||
@@ -96,7 +87,10 @@ pokemon.post("/", async (req, res) => {
   )
     res.status(400).json({ error: "All properties must be filled" });
   try {
-    const newPokemon = await Pokemon.create(req.body);
+    const newPokemon = await Pokemon.create({
+      ...req.body,
+      name: name.toLowerCase(),
+    });
     const t1 = await Type.findOne({
       where: {
         name: type1,

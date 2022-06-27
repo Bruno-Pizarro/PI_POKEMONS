@@ -1,6 +1,6 @@
 .cardCont{
     width: 150px;
-    background-color: rgb(44, 44, 44);
+    background: linear-gradient(355deg, rgb(141, 141, 141) 51%, rgba(0,0,0,1) 52%, rgba(0,0,0,1) 54%, rgb(117, 3, 3) 55%); 
     padding: 10px;
     border-radius: 10px;
     margin: 10px;
@@ -13,9 +13,24 @@
     cursor: pointer;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.651);
 }
+.cardCont::before{
+    content: '';
+    width: 130px;
+    height: 130px;
+    margin: auto;
+    transition: all ease .2s;
+    background-color: rgb(226, 226, 226);
+    border-radius: 50%;
+    border: 2px solid rgba(39, 39, 39, 0.74);
+    position: absolute;
+}
 
 .cardCont:hover{
+    background: linear-gradient(355deg, rgb(202, 202, 202) 51%, rgba(0,0,0,1) 52%, rgba(0,0,0,1) 54%, rgb(201, 9, 9) 55%); 
     transform: scale(1.05);
+}
+.cardCont:hover::before{
+    background-color: wheat;
 }
 
 .cardCont:hover .cardName{
@@ -25,15 +40,19 @@
 .cardName{
     color: rgb(179, 179, 179);
     text-decoration: none;
-    font-size: 28px;
+    font-size: 25px;
     letter-spacing: -2px;
+    overflow: hidden;
+    width: 100%;
     font-style: italic;
+    text-shadow: 1px 1px 1px black;
 }
 
 .cardImage{
-    width: 110px;
+    max-width: 110px;
     margin: 10px;
-    max-height: 120px;
+    max-height: 130px;
+    border-radius: 10px;
     filter: drop-shadow(0px 0px 10px rgba(255, 245, 216, 0.336));
 }
 
