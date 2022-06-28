@@ -144,7 +144,7 @@ export default function CreatePokemon() {
             name="attack"
             type="range"
             min="1"
-            max="250"
+            max="200"
             onChange={(e) => handleOnChange(e)}
             value={input.attack}
           />
@@ -181,7 +181,7 @@ export default function CreatePokemon() {
             name="weight"
             type="range"
             min="10"
-            max="100"
+            max="500"
             onChange={(e) => handleOnChange(e)}
             value={input.weight}
           />
