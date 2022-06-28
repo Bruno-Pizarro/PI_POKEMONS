@@ -14,3 +14,37 @@
 .divCards{
     width: 80%;
 }
+@media (max-width: 1300px){
+    .homeCont{
+        height: 1800px;
+    }
+    @media (max-width: 900px){
+        .homeCont{
+            height: 1300px;
+        }
+        .divFilters{
+            display: none;
+        }
+        .divCards{
+            width: 100%;
+        }
+        @media (max-width: 880px){
+            .homeCont{
+                height: 2000px;
+            }
+            @media (max-width: 680px){
+                .homeCont{
+                    height: 1900px;
+                }
+                @media (max-width: 500px){
+                    .homeCont{
+                        height: 3800px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+

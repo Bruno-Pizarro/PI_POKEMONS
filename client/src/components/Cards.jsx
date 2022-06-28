@@ -18,7 +18,7 @@ export default function Cards() {
     setLoad(
       <img
         className={s.loading}
-        src="https://c.tenor.com/fSsxftCb8w0AAAAd/pikachu-running.gif"
+        src="https://64.media.tumblr.com/tumblr_m309yzdquq1qc3fjso1_500.gifv"
         alt="Loading"
       />
     );

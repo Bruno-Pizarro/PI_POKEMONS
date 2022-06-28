@@ -18,13 +18,13 @@
     border-radius: 20px;
     box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.63);
     margin: 0px;
-    margin-top: 30px;
+    margin-top: 60px;
     padding: 10px 0;
     transition: all ease .1s;
 }
 
 .info:hover{
-    transform: scale(1.05);
+    transform: scale(1.01);
 }
 
 .name{
@@ -64,7 +64,7 @@
 }
 
 .featuresCont p{
-    font-size: 19px;
+    font-size: 29px;
     margin: 5px auto;
     font-weight: bold;
 }
@@ -131,8 +131,38 @@
     text-shadow: 2px 2px 2px black;
     width: 50px;
     transition: all ease .2s;
+    position: absolute;
+    z-index: 0;
 }
 .back:hover{
     background-color: black;
     color: #ffea8b;
+}
+
+@media (max-width: 900px){
+    .allcontainer{
+        height: 150vh;
+        display: block;
+    }
+    .cont{
+        margin-top: 100px;
+        flex-direction: column;
+        height: 70%;
+        padding: 50px 0;
+    }
+    .info{
+        margin-top: 200px;
+        width: 90%;
+    }
+    .back{
+        font-size: 40px;
+    }
+    @media (max-width: 500px){
+        .typeImage{
+            width: 30%;
+        }
+        .pokemonImage{
+            width: 80%;
+        }
+    }
 }

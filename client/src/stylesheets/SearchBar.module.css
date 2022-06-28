@@ -6,6 +6,7 @@
     width: 30%;
     margin: 0px;
     align-items: center;
+    margin-right: 60px;
 }
 
 .input{
@@ -23,31 +24,56 @@
 }
 
 .btn{
-    height: 35px;
-    padding: 0 10px;
+    height: 40px;
+    width: 40px;
     border: none;
     background-color: rgb(110, 82, 39);
     border-radius: 10px;
     align-items: center;
     font-weight: bolder;
-    font-size: 16px;
+    font-size: 20px;
     color: rgb(165, 165, 165);
     text-align: center;
     cursor: pointer;
     transition: all ease .2s;
+    transform: rotate(-90deg);
 }
+
 .btn:hover{
     background-color: rgb(160, 117, 52);
     transform: scale(1.05);
+    transform: rotate(-90deg);
     color: white;
 }
 
 .btnsearch{
     background-color: rgb(24, 92, 41);
+    transform: rotate(-90deg);
 }
 
 .btnsearch:hover{
     background-color: rgb(47, 177, 80);
     transform: scale(1.05);
+    transform: rotate(-90deg);
     color: white;
+}
+
+@media (max-width: 900px){
+    .searchCont{
+        margin-right: -100px;
+    }
+    .input{
+        width: 150px;
+    }
+    @media(max-width: 400px){
+        .searchCont{
+            margin-right: -50px;
+        }
+        .input{
+            width: 100px;
+        }
+        .btn{
+            font-size: 18px;
+        }
+    }
 }

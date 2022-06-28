@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllTypes, applyFilters } from "../redux/actions";
 import s from "../stylesheets/AllFilters.module.css";
 
-export default function AllFilters() {
+export default function AllFilters({ open, home }) {
   const dispatch = useDispatch();
   const [filters, setFilters] = useState({
     from: "all",
@@ -33,7 +33,7 @@ export default function AllFilters() {
   }
 
   return (
-    <div className={s.contfilter}>
+    <div className={`${s.contfilter} ${home ? s.home : null}`}>
       <form className={s.form} onSubmit={(e) => handleSubmit(e)}>
         <p>Filters</p>
         <select

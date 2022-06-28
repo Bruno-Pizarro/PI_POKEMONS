@@ -52,3 +52,15 @@
     color: white;
     transition: all ease .2s;
 }
+
+@media (max-width: 650px){
+    .pageCont{
+        width: 100%;
+    }
+    @media (max-width: 450px){
+        .pageCont{
+            width: 120%;
+            margin-left: -20px;
+        }
+    }
+}
