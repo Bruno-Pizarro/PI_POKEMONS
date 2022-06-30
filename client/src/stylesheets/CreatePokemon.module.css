@@ -27,7 +27,7 @@
     justify-content: center;
     width: 60%;
 }
-.inputCont div{
+.inputCont .divInputs{
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -67,9 +67,10 @@
     border: none;
 }
 
-.inputCont input{
-    width: 200px;
+.inputCont  input{
+    width: 170px;
     height: 25px;
+    margin: 5px auto;
     border-radius: 5px;
     border: none;
     padding: 2px 5px;
@@ -85,6 +86,28 @@
     font-size: 15px;
     width: 200px;
     font-weight: bold;
+    font-style: normal;
+}
+.selSpan{
+    color: white;
+    font-style: italic;
+    font-weight: bold;
+    margin: 10px 0;
+}
+.inputCont div .selSpan{
+    color: white;
+    margin: 0 -10px 0 0;
+    width: 10px;
+}
+.inputCont .firstTypeDiv{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.inputCont .firstTypeDiv select{
+    margin: 0;
 }
 
 .imageView{
@@ -204,8 +227,12 @@
         height: 20px;
     }
     @media (max-width: 500px){
+        .inputCont  input{
+            width: 100%;
+        }
         .container{
             height: 1500px;
+            width: 130%;
             flex-direction: column;
             justify-content: space-between;
         }
@@ -216,12 +243,13 @@
             margin: 0;
         }
         .formCont{
-            padding: 10px;
+            padding: 30px 0;
             margin: 20px;
+            height: 100%;
             margin-top: 100px;
             display: flex;
-            flex: 1 1;
             flex-direction: column;
+            flex-wrap: nowrap;
             justify-content: center;
         }
     }

@@ -18,6 +18,7 @@ import {
 const initialState = {
   allPokemons: [],
   pokemons: [],
+  nonsorted: [],
   pokemonDetail: {},
   paginated: [],
   types: [],
@@ -30,6 +31,7 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         allPokemons: [...action.payload],
+        nonsorted: [...action.payload],
         pokemons: action.payload,
       };
     case FILTER_BY_NAME:
@@ -63,10 +65,11 @@ export default function reducer(state = initialState, action) {
           ? state.pokemons.sort((a, b) => b.attack - a.attack)
           : action.payload === "a-l-t-h"
           ? state.pokemons.sort((a, b) => a.attack - b.attack)
-          : [...state.allPokemons];
+          : state.nonsorted;
+
       return {
         ...state,
-        pokemons: sorted,
+        pokemons: [...sorted],
       };
     case CLEAR_POKEMONS:
       return {
@@ -74,14 +77,18 @@ export default function reducer(state = initialState, action) {
         pokemons: [],
       };
     case GET_API_POKEMONS:
+      const api = state.allPokemons.filter((p) => p.id.substring(0, 1) === "a");
       return {
         ...state,
-        pokemons: state.allPokemons.filter((p) => p.id.substring(0, 1) === "a"),
+        pokemons: api,
+        nonsorted: [...api],
       };
     case GET_DB_POKEMONS:
+      const db = state.allPokemons.filter((p) => p.id.substring(0, 1) === "d");
       return {
         ...state,
-        pokemons: state.allPokemons.filter((p) => p.id.substring(0, 1) === "d"),
+        pokemons: db,
+        nonsorted: [...db],
       };
     case GET_ALL_TYPES:
       return {
@@ -89,16 +96,18 @@ export default function reducer(state = initialState, action) {
         types: action.payload,
       };
     case FILTER_BY_TYPE:
+      const type = state.pokemons.filter((p) =>
+        p.types.includes(action.payload)
+      );
       return {
         ...state,
-        pokemons: state.pokemons.filter((p) =>
-          p.types.includes(action.payload)
-        ),
+        pokemons: type,
+        nonsorted: [...type],
       };
     case GET_PAGINATED:
       return {
         ...state,
-        paginated: state.pokemons.slice(action.payload, action.payload + 10),
+        paginated: state.pokemons.slice(action.payload, action.payload + 12),
       };
     case GET_ALL:
       return {

@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllTypes, applyFilters } from "../redux/actions";
+import { getAllTypes, applyFilters, sortBy } from "../redux/actions";
 import s from "../stylesheets/AllFilters.module.css";
 
 export default function AllFilters({ open, home }) {
@@ -11,6 +11,7 @@ export default function AllFilters({ open, home }) {
     types: "all",
     order: "all",
   });
+  const [order, setOrder] = useState("all");
   const types = useSelector((state) => state.types);
 
   useEffect(() => {
@@ -21,15 +22,19 @@ export default function AllFilters({ open, home }) {
     e.preventDefault();
     setFilters({ ...filters, [e.target.id]: e.target.value });
   }
-
+  function handleChangeSort(e) {
+    e.preventDefault();
+    setOrder(e.target.value);
+    dispatch(sortBy(e.target.value));
+  }
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(applyFilters(filters));
     setFilters({
       from: "all",
       types: "all",
-      order: "all",
     });
+    setOrder("all");
   }
 
   return (
@@ -68,14 +73,22 @@ export default function AllFilters({ open, home }) {
               </option>
             ))}
         </select>
+
+        <button className={s.applyBtn} type="submit">
+          {" "}
+          {filters.from !== "all" || filters.types !== "all"
+            ? "Apply Filter"
+            : "Refresh"}
+        </button>
+        <p>Order</p>
         <select
           className={s.selects}
           id="order"
-          value={filters.order}
-          onChange={(e) => handleChange(e)}
+          value={order}
+          onChange={(e) => handleChangeSort(e)}
         >
           <option value="all" className={s.option}>
-            Select order
+            No order
           </option>
           <option value="a-z" className={s.option}>
             A-Z
@@ -90,14 +103,6 @@ export default function AllFilters({ open, home }) {
             Attack(lowest to highest)
           </option>
         </select>
-        <button className={s.applyBtn} type="submit">
-          {" "}
-          {filters.order !== "all" ||
-          filters.from !== "all" ||
-          filters.types !== "all"
-            ? "Apply Filter"
-            : "Refresh"}
-        </button>
       </form>
     </div>
   );

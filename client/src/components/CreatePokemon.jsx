@@ -71,7 +71,7 @@ export default function CreatePokemon() {
     <div className={s.container}>
       <form className={s.formCont} onSubmit={(e) => handleOnSubmit(e)}>
         <div className={s.inputCont}>
-          <div>
+          <div className={s.divInputs}>
             <input
               maxLength="20"
               type="text"
@@ -101,19 +101,23 @@ export default function CreatePokemon() {
                 : "Image must be an image url"}
             </span>
           </div>
-          <select
-            id="types1"
-            name="type1"
-            value={input.type1}
-            onChange={(e) => handleOnChange(e)}
-          >
-            {types &&
-              types.map((t) => (
-                <option key={t.id} value={t.name}>
-                  {t.name.charAt(0).toUpperCase() + t.name.slice(1)}
-                </option>
-              ))}
-          </select>
+          <span className={s.selSpan}>Select Types:</span>
+          <div className={s.firstTypeDiv}>
+            <select
+              id="types1"
+              name="type1"
+              value={input.type1}
+              onChange={(e) => handleOnChange(e)}
+            >
+              {types &&
+                types.map((t) => (
+                  <option key={t.id} value={t.name}>
+                    {t.name.charAt(0).toUpperCase() + t.name.slice(1)}
+                  </option>
+                ))}
+            </select>
+            <span className={s.selSpan}>*</span>
+          </div>
           <select
             id="types2"
             name="type2"
@@ -135,7 +139,7 @@ export default function CreatePokemon() {
             name="hp"
             type="range"
             min="1"
-            max="250"
+            max="255"
             value={input.hp}
             onChange={(e) => handleOnChange(e)}
           />
@@ -162,7 +166,7 @@ export default function CreatePokemon() {
             name="speed"
             type="range"
             min="1"
-            max="250"
+            max="200"
             onChange={(e) => handleOnChange(e)}
             value={input.speed}
           />

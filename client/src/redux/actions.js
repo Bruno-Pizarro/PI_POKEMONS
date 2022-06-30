@@ -1,5 +1,6 @@
 import axios from "axios";
 
+axios.defaults.baseURL = `http://localhost:3001/`;
 //==============================================
 //==============ACTION TYPES====================
 //==============================================
@@ -30,7 +31,7 @@ export const GET_ALL_TYPES = "GET_ALL_TYPES";
 export function getAllPokemons() {
   return function (dispatch) {
     dispatch(clearPokemons());
-    return axios.get("http://localhost:3001/pokemon").then((r) => {
+    return axios.get("pokemons").then((r) => {
       return dispatch({ type: GET_ALL_POKEMONS, payload: r.data });
     });
   };
@@ -59,7 +60,7 @@ export function clearPokemons() {
 export function filterName(name) {
   return function (dispatch) {
     return axios
-      .get(`http://localhost:3001/pokemon?name=${name}`)
+      .get(`pokemons?name=${name}`)
       .then((r) => {
         return dispatch({ type: FILTER_BY_NAME, payload: r.data });
       })
@@ -78,7 +79,7 @@ export function clearError() {
 
 export function pokemonDetail(id) {
   return function (dispatch) {
-    return axios.get(`http://localhost:3001/pokemon/${id}`).then((r) => {
+    return axios.get(`pokemons/${id}`).then((r) => {
       return dispatch({ type: GET_DETAIL, payload: r.data });
     });
   };
@@ -95,7 +96,7 @@ export function clearDetail() {
 export function createPokemon(pokemonBody) {
   return async function (dispatch) {
     axios
-      .post("http://localhost:3001/pokemon", pokemonBody)
+      .post("pokemons", pokemonBody)
       .then((r) => {
         alert(r.data.success);
       })
@@ -115,7 +116,6 @@ export function applyFilters(filters) {
     else if (filters.from === "api") dispatch(getApiPokemons());
     else if (filters.from === "db") dispatch(getDBPokemons());
     if (filters.types !== "all") dispatch(filterByType(filters.types));
-    if (filters.order !== "all") dispatch(sortBy(filters.order));
   };
 }
 
@@ -150,7 +150,7 @@ export function getPage(n) {
 //==============================================
 export function getAllTypes() {
   return async function (dispatch) {
-    const response = await axios.get("http://localhost:3001/type");
+    const response = await axios.get("types");
     dispatch({ type: GET_ALL_TYPES, payload: response.data });
   };
 }

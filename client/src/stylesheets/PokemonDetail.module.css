@@ -76,7 +76,8 @@
 
 
 .pokemonImage{
-    width: 400px;
+    min-width: 400px;
+    max-height: 450px;
     border-radius: 20px;
     filter: drop-shadow(0px 0px 20px rgba(255, 254, 204, 0.973));
 }
@@ -111,7 +112,7 @@
 
 .backdiv{
     width: 100%;
-    margin: 0 0 -60px 0;
+    margin: 0 0px -60px 40px;
     display: flex;
     justify-content: flex-start;
 }
@@ -126,6 +127,7 @@
     padding: 0px 2px 2px 0px;
     height: 50px;
     display: flex;
+    font-weight: bold;
     justify-content: center;
     align-items: center;
     text-shadow: 2px 2px 2px black;
@@ -141,7 +143,7 @@
 
 @media (max-width: 900px){
     .allcontainer{
-        height: 150vh;
+        height: 170vh;
         display: block;
     }
     .cont{
@@ -154,14 +156,12 @@
         margin-top: 200px;
         width: 90%;
     }
-    .back{
-        font-size: 40px;
-    }
     @media (max-width: 500px){
         .typeImage{
             width: 30%;
         }
         .pokemonImage{
+            min-width: 80%;
             width: 80%;
         }
     }

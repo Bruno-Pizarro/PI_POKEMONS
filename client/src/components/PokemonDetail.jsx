@@ -25,7 +25,7 @@ export default function PokemonDetail() {
     <div className={s.allcontainer}>
       <div className={s.backdiv}>
         <button onClick={() => back()} className={s.back}>
-          🢀
+          BACK
         </button>
       </div>
       <div className={s.cont}>

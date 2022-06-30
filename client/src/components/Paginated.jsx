@@ -14,23 +14,24 @@ export default function Paginated() {
   useEffect(() => {
     setCount(0);
     setMin(0);
-    setMax(40);
+    setMax(48);
     dispatch(getPage(0));
   }, [dispatch, pokemons]);
   function handlePrev() {
     if (count - 9 > 0) {
-      dispatch(getPage(count - 10));
-      setCount(count - 10);
-      if (count <= max && count < pokemons.length - 30) setMin(count - 10);
-      if (count <= max && count - 10 !== 0) setMax(count + 20);
+      dispatch(getPage(count - 12));
+      if (count - 12 < pokemons.length - 48) setMin(count - 12);
+      if (count - 12 < pokemons.length - 48 && max - 12 >= 48)
+        setMax(count + 24);
+      setCount(count - 12);
     }
   }
   function handleNext() {
-    if (count + 10 < pokemons.length) {
-      dispatch(getPage(count + 10));
-      if (min < pokemons.length - 40) setMin(count + 10);
-      if (max + 10 < pokemons.length) setMax(count + 40);
-      setCount(count + 10);
+    if (count + 12 < pokemons.length) {
+      dispatch(getPage(count + 12));
+      if (min < pokemons.length - 48) setMin(min + 12);
+      if (max + 12 <= pokemons.length) setMax(min + 48);
+      setCount(count + 12);
     }
   }
   function page(page) {
@@ -51,7 +52,7 @@ export default function Paginated() {
       {pokemons &&
         pokemons.map((p, i) =>
           i === 0 ? (
-            min === 0 || min - max < 40 ? (
+            min === 0 || min - max < 48 ? (
               <button
                 className={`${s.pageContBtn} ${
                   i === count ? s.currentPage : null
@@ -59,10 +60,10 @@ export default function Paginated() {
                 key={i}
                 onClick={() => page(i)}
               >
-                {i / 10 + 1}
+                {i / 12 + 1}
               </button>
             ) : null
-          ) : (i + 10) % 10 === 0 ? (
+          ) : (i + 12) % 12 === 0 ? (
             i >= min ? (
               i <= max ? (
                 <button
@@ -72,7 +73,7 @@ export default function Paginated() {
                   key={i}
                   onClick={() => page(i)}
                 >
-                  {i / 10 + 1}
+                  {i / 12 + 1}
                 </button>
               ) : null
             ) : null

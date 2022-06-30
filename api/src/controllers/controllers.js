@@ -7,7 +7,7 @@ module.exports = {
   getApiPokemons: async function () {
     var obj = {};
     const response = await axios.get(
-      `https://pokeapi.co/api/v2/pokemon?limit=200`
+      `https://pokeapi.co/api/v2/pokemon?limit=40`
     );
     const data = response.data.results.map(async (p, i) => {
       ++i;

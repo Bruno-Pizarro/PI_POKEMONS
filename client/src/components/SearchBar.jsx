@@ -32,7 +32,7 @@ export default function SearchBar() {
         type="submit"
         className={`${s.btn} ${filter !== "" ? s.btnsearch : null}`}
       >
-        {filter === "" ? <span>↺</span> : <span>🔎︎</span>}
+        {filter === "" ? <span>Refresh</span> : <span>Search</span>}
       </button>
     </form>
   );
