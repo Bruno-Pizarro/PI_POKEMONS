@@ -9,7 +9,6 @@ export default function AllFilters({ open, home }) {
   const [filters, setFilters] = useState({
     from: "all",
     types: "all",
-    order: "all",
   });
   const [order, setOrder] = useState("all");
   const types = useSelector((state) => state.types);

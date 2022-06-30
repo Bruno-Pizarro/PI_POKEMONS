@@ -9,7 +9,7 @@ export default function Paginated() {
   const dispatch = useDispatch();
   const [count, setCount] = useState(0);
   const pokemons = useSelector((state) => state.pokemons);
-  const [max, setMax] = useState(40);
+  const [max, setMax] = useState(48);
   const [min, setMin] = useState(0);
   useEffect(() => {
     setCount(0);
@@ -36,17 +36,17 @@ export default function Paginated() {
   }
   function page(page) {
     dispatch(getPage(page));
-    if (page < pokemons.length - 40) setMin(page);
+    if (page < pokemons.length - 48) setMin(page);
     else if (page > pokemons.length - 40) setMin(pokemons.length - 40);
-    if (page === 0) setMax(page + 40);
-    else if (page + 30 < pokemons.length) setMax(page + 30);
-    else if (page + 30 > pokemons.length) setMax(pokemons.length);
+    if (page === 0) setMax(page + 48);
+    else if (page + 36 < pokemons.length) setMax(page + 36);
+    else if (page + 36 > pokemons.length) setMax(pokemons.length);
     setCount(page);
   }
 
   return (
     <div className={s.pageCont}>
-      <button className={s.nextPrev} value={10} onClick={() => handlePrev()}>
+      <button className={s.nextPrev} onClick={() => handlePrev()}>
         Prev
       </button>
       {pokemons &&
@@ -79,7 +79,7 @@ export default function Paginated() {
             ) : null
           ) : null
         )}
-      <button className={s.nextPrev} value={10} onClick={() => handleNext()}>
+      <button className={s.nextPrev} onClick={() => handleNext()}>
         Next
       </button>
     </div>
