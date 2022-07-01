@@ -232,7 +232,7 @@
         }
         .container{
             height: 1500px;
-            width: 130%;
+            width: 100%;
             flex-direction: column;
             justify-content: space-between;
         }

@@ -84,7 +84,7 @@ export default function CreatePokemon() {
             />
             <span>{errors.name ? "Name is required" : null}</span>
           </div>
-          <div>
+          <div className={s.divInputs}>
             <input
               type="text"
               name="image"
