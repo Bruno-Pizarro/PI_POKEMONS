@@ -25,11 +25,13 @@ export default function SearchBar() {
         className={s.input}
         type="text"
         value={filter}
+        data-testid="searchBar"
         placeholder="Search..."
         onChange={(e) => handleChange(e)}
       />
       <button
         type="submit"
+        data-testid="button"
         className={`${s.btn} ${filter !== "" ? s.btnsearch : null}`}
       >
         {filter === "" ? <span>Refresh</span> : <span>Search</span>}

@@ -1,4 +1,5 @@
 import React from "react";
+import "@testing-library/jest-dom/extend-expect";
 import { shallow } from "enzyme";
 import Home from "../components/Home.jsx";
 import AllFilters from "../components/AllFilters.jsx";

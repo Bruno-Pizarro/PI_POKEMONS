@@ -2,7 +2,6 @@ const axios = require("axios");
 const { Pokemon, Type } = require("../db.js");
 
 module.exports = {
-  pokemons: [],
   types: [],
   getApiPokemons: async function () {
     var obj = {};
@@ -50,46 +49,24 @@ module.exports = {
       }),
     };
   },
-  getApiTypes: async function () {
-    var obj = {};
+  loadApiTypes: async function () {
     const response = await axios.get("https://pokeapi.co/api/v2/type");
-    const data = response.data.results.map(async (t, i) => {
-      obj = {
-        id: `a${++i}`,
-        name: t.name,
-      };
-      return obj;
-    });
-    var allTypes = await Promise.all(data);
-    return allTypes;
+    for (let i = 0; i < response.data.results.length; i++) {
+      await Type.create({
+        name: response.data.results[i].name,
+      });
+    }
+    return;
   },
   getDBTypes: async function () {
     const types = await Type.findAll();
     const jsonTypes = types.map((t) => t.toJSON());
     return jsonTypes.map((t) => {
       return {
-        id: `d${t.id}`,
+        id: t.id,
         name: t.name,
       };
     });
-  },
-  loadApiTypes: async function () {
-    const api = await this.getApiTypes();
-    const promises = api.map((t) => {
-      Type.create({
-        name: t.name,
-      });
-    });
-    await Promise.all(promises);
-    this.types = [...api];
-  },
-  returnTypes: async function () {
-    this.types = await this.getDBTypes();
-    return this.types;
-  },
-  getApiTypeName: async function (name) {
-    const response = await axios.get(`https://pokeapi.co/api/v2/type/${name}`);
-    return response.data.results;
   },
   getDBPokemons: async function () {
     const pokemons = await Pokemon.findAll({

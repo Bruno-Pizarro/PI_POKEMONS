@@ -8,41 +8,21 @@ pokemon.get("/", async (req, res) => {
   try {
     const all = await controller.getAllPokemon();
     if (name) {
-      var find = all.find((p) => p.name === name);
+      var find = all.find((p) => p.name === name.toLowerCase());
       if (find) {
         return res.json(find);
       } else {
-        return res.json(await controller.getApiPokemonDetail(name));
+        try {
+          return res
+            .status(200)
+            .json(await controller.getApiPokemonDetail(name.toLowerCase()));
+        } catch (error) {
+          return res.status(404).json({ error: error.message });
+        }
       }
     }
 
     res.json(all);
-  } catch (error) {
-    res.status(404).json({ error: error.message });
-  }
-});
-
-pokemon.get("/api", async (req, res) => {
-  const { id, name } = req.query;
-  try {
-    if (id) return res.json(await controller.getApiPokemonDetail(id));
-    if (name) return res.json(await controller.getApiPokemonDetail(name));
-    res.json(await controller.getApiPokemons());
-  } catch (error) {
-    res.status(404).json({ error: error.message });
-  }
-});
-
-pokemon.get("/db", async (req, res) => {
-  const { id } = req.query;
-  const { atribute, filter } = req.body;
-  try {
-    if (id) return res.send((await Pokemon.findByPk(id)).toJSON());
-    if (atribute) {
-      const filtered = await controller.getDBPokemonDetail(atribute, filter);
-      return res.send(filtered.map((p) => p.toJSON()));
-    }
-    res.send(await controller.getDBPokemons());
   } catch (error) {
     res.status(404).json({ error: error.message });
   }
@@ -67,14 +47,7 @@ pokemon.get("/:id", async (req, res) => {
 pokemon.post("/", async (req, res) => {
   const { name, hp, attack, defense, speed, height, weight, type1, type2 } =
     req.body;
-  const pokemons = await controller.getAllPokemon();
-  const response = pokemons.find(
-    (p) => p.name.toLowerCase() === name.toLowerCase()
-  );
-  if (response)
-    return res
-      .status(409)
-      .send({ error: `The pokemon named ${name} already exist.` });
+
   if (
     !name ||
     !hp ||
@@ -85,7 +58,15 @@ pokemon.post("/", async (req, res) => {
     !weight ||
     !type1
   )
-    res.status(400).json({ error: "All properties must be filled" });
+    return res.status(400).json({ error: "All properties must be filled" });
+  const pokemons = await controller.getAllPokemon();
+  const response = pokemons.find(
+    (p) => p.name.toLowerCase() === name.toLowerCase()
+  );
+  if (response)
+    return res
+      .status(409)
+      .send({ error: `The pokemon named ${name} already exist.` });
   try {
     const newPokemon = await Pokemon.create({
       ...req.body,
@@ -105,7 +86,7 @@ pokemon.post("/", async (req, res) => {
       });
       newPokemon.addType(t2);
     }
-    res.json({ success: "Pokemon Created!" });
+    res.status(201).json({ success: "Pokemon Created!" });
   } catch (error) {
     res.status(404).json({ error: error.message });
   }

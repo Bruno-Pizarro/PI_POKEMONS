@@ -175,6 +175,9 @@
     color: rgb(173, 4, 4);
     text-decoration: none;
     height: 100%;
+    padding: 0 15px;
+    border-radius: 15px;
+    border: rgb(99, 18, 18) 3px solid;
     font-size: 2rem;
     font-weight: bold;
     cursor: pointer;
@@ -186,6 +189,8 @@
 .container div a:hover{
     color: rgb(230, 24, 24);
     font-size: 2.4rem;
+    background-color: rgba(255, 255, 255, 0.411);
+    border: rgb(243, 77, 77) 3px solid;
     text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
 }
 @media (max-width:1300px){
